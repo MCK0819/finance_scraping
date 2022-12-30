@@ -68,7 +68,7 @@ class Search:
         driver = self.driver_run(url)
         url_list = []
         # 상위 10 업종까지
-        for i in range(0, 10):
+        for i in range(0, 3):
             try:
                 target_url = driver.find_elements_by_class_name('lAlign a')
                 extract_url = target_url[i].get_attribute('href')
@@ -78,6 +78,8 @@ class Search:
                 print(self.get_title())
                 self.find_CompanyInfo(extract_url)
                 print("============================한종목 끝==================================")
+                if url_list not in []:
+                    self.postWrite(self.get_post_title(), self.get_post_data())
             except exceptions.StaleElementReferenceException as e:
                 print(e)
                 pass
@@ -201,8 +203,6 @@ class Search:
         # print('companytitle = ',post_company_title)
         # print('data = ',data)
 
-
-class BlogPost:
     # 포스팅하기
     def postWrite(self, title, content):
         visibility = 3
